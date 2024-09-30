@@ -108,7 +108,7 @@ if result:
     output_language = language_codes[out_lang]
 
     english_accent = st.selectbox(
-        "Selecciona el acento",
+        "Selecciona el acento (solo funciona para inglés; no afecta los demás idiomas)",
         (
             "Defecto",
             "Español",
