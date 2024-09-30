@@ -24,7 +24,7 @@ with st.sidebar:
 
 st.write("Toca el Botón y habla lo que quieres traducir")
 
-stt_button = Button(label=" Escuchar  🎤 (Solo presiona una vez y luego habla)", width=300,  height=50)
+stt_button = Button(label=" Escuchar  🎤 (Solo presiona una vez y luego habla)", width=300, height=50)
 
 stt_button.js_on_event("button_click", CustomJS(code=""" 
     var recognition = new webkitSpeechRecognition();
@@ -60,7 +60,19 @@ if result:
 
         # Detección de idioma
         detected_language = Translator().detect(captured_text).lang
-        st.markdown(f"**El idioma que hablaste fue: {detected_language}**")
+        language_names = {
+            "en": "Inglés",
+            "es": "Español",
+            "bn": "Bengalí",
+            "ko": "Coreano",
+            "zh-cn": "Mandarín",
+            "ja": "Japonés",
+            "fr": "Francés",
+            "de": "Alemán",
+            "pt": "Portugués",
+            "ru": "Ruso"
+        }
+        st.markdown(f"**El idioma que hablaste fue: {language_names.get(detected_language, 'Desconocido')}**")
 
     try:
         os.mkdir("temp")
@@ -71,58 +83,32 @@ if result:
     translator = Translator()
 
     text = str(captured_text)
-    in_lang = st.selectbox(
-        "Selecciona el lenguaje de Entrada",
-        ("Inglés", "Español", "Bengali", "Coreano", "Mandarín", "Japonés", "Francés", "Alemán", "Portugués", "Ruso"),
-    )
-    if in_lang == "Inglés":
-        input_language = "en"
-    elif in_lang == "Español":
-        input_language = "es"
-    elif in_lang == "Bengali":
-        input_language = "bn"
-    elif in_lang == "Coreano":
-        input_language = "ko"
-    elif in_lang == "Mandarín":
-        input_language = "zh-cn"
-    elif in_lang == "Japonés":
-        input_language = "ja"
-    elif in_lang == "Francés":
-        input_language = "fr"
-    elif in_lang == "Alemán":
-        input_language = "de"
-    elif in_lang == "Portugués":
-        input_language = "pt"
-    elif in_lang == "Ruso":
-        input_language = "ru"
+    language_options = [
+        "Inglés", "Español", "Bengalí", "Coreano", "Mandarín",
+        "Japonés", "Francés", "Alemán", "Portugués", "Ruso"
+    ]
+    
+    in_lang = st.selectbox("Selecciona el lenguaje de Entrada", language_options)
+    out_lang = st.selectbox("Selecciona el lenguaje de salida", language_options)
 
-    out_lang = st.selectbox(
-        "Selecciona el lenguaje de salida",
-        ("Inglés", "Español", "Bengali", "Coreano", "Mandarín", "Japonés", "Francés", "Alemán", "Portugués", "Ruso"),
-    )
-    if out_lang == "Inglés":
-        output_language = "en"
-    elif out_lang == "Español":
-        output_language = "es"
-    elif out_lang == "Bengali":
-        output_language = "bn"
-    elif out_lang == "Coreano":
-        output_language = "ko"
-    elif out_lang == "Mandarín":
-        output_language = "zh-cn"
-    elif out_lang == "Japonés":
-        output_language = "ja"
-    elif out_lang == "Francés":
-        output_language = "fr"
-    elif out_lang == "Alemán":
-        output_language = "de"
-    elif out_lang == "Portugués":
-        output_language = "pt"
-    elif out_lang == "Ruso":
-        output_language = "ru"
+    language_codes = {
+        "Inglés": "en",
+        "Español": "es",
+        "Bengalí": "bn",
+        "Coreano": "ko",
+        "Mandarín": "zh-cn",
+        "Japonés": "ja",
+        "Francés": "fr",
+        "Alemán": "de",
+        "Portugués": "pt",
+        "Ruso": "ru"
+    }
+
+    input_language = language_codes[in_lang]
+    output_language = language_codes[out_lang]
 
     english_accent = st.selectbox(
-        "Selecciona el acento (solo funciona con inglés)",
+        "Selecciona el acento",
         (
             "Defecto",
             "Español",
