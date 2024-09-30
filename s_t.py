@@ -55,7 +55,12 @@ result = streamlit_bokeh_events(
 
 if result:
     if "GET_TEXT" in result:
-        st.write(result.get("GET_TEXT"))
+        captured_text = result.get("GET_TEXT")
+        st.write(captured_text)
+
+        # Detección de idioma
+        detected_language = Translator().detect(captured_text).lang
+        st.markdown(f"**El idioma que hablaste fue: {detected_language}**")
 
     try:
         os.mkdir("temp")
@@ -65,10 +70,10 @@ if result:
     st.title("Texto a Audio")
     translator = Translator()
 
-    text = str(result.get("GET_TEXT"))
+    text = str(captured_text)
     in_lang = st.selectbox(
         "Selecciona el lenguaje de Entrada",
-        ("Inglés", "Español", "Bengali", "Coreano", "Mandarín", "Japonés", "Francés", "Alemán"),
+        ("Inglés", "Español", "Bengali", "Coreano", "Mandarín", "Japonés", "Francés", "Alemán", "Portugués", "Ruso"),
     )
     if in_lang == "Inglés":
         input_language = "en"
@@ -86,10 +91,14 @@ if result:
         input_language = "fr"
     elif in_lang == "Alemán":
         input_language = "de"
+    elif in_lang == "Portugués":
+        input_language = "pt"
+    elif in_lang == "Ruso":
+        input_language = "ru"
 
     out_lang = st.selectbox(
         "Selecciona el lenguaje de salida",
-        ("Inglés", "Español", "Bengali", "Coreano", "Mandarín", "Japonés", "Francés", "Alemán"),
+        ("Inglés", "Español", "Bengali", "Coreano", "Mandarín", "Japonés", "Francés", "Alemán", "Portugués", "Ruso"),
     )
     if out_lang == "Inglés":
         output_language = "en"
@@ -107,9 +116,13 @@ if result:
         output_language = "fr"
     elif out_lang == "Alemán":
         output_language = "de"
+    elif out_lang == "Portugués":
+        output_language = "pt"
+    elif out_lang == "Ruso":
+        output_language = "ru"
 
     english_accent = st.selectbox(
-        "Selecciona el acento",
+        "Selecciona el acento (solo funciona con inglés)",
         (
             "Defecto",
             "Español",
@@ -154,7 +167,7 @@ if result:
     display_output_text = st.checkbox("Mostrar el texto")
 
     # Mostrar GIF de carga mientras se procesa el audio
-    loading_gif = 'dog.gif'  # Ruta al GIF de carga
+    loading_gif = 'assets/loading.gif'  # Ruta al GIF de carga
 
     if st.button("Convertir"):
         gif_placeholder = st.empty()
