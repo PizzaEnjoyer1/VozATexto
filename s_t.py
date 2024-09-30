@@ -90,7 +90,7 @@ if result:
     ]
     
     # Selección del lenguaje de entrada con el idioma detectado como predeterminado
-    in_lang = st.selectbox("Selecciona el lenguaje de Entrada (en caso de que el reconocimiento haya fallada)", language_options, index=language_options.index(detected_language_name))
+    in_lang = st.selectbox("Selecciona el lenguaje de Entrada (en caso de que el reconocimiento haya fallado)", language_options, index=language_options.index(detected_language_name))
     
     out_lang = st.selectbox("Selecciona el lenguaje de salida", language_options)
 
