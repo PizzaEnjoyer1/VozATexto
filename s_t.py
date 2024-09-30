@@ -72,7 +72,8 @@ if result:
             "pt": "Portugués",
             "ru": "Ruso"
         }
-        st.markdown(f"**El idioma que hablaste fue: {language_names.get(detected_language, 'Desconocido')}**")
+        detected_language_name = language_names.get(detected_language, 'Desconocido')
+        st.markdown(f"**El idioma que hablaste fue: {detected_language_name}**")
 
     try:
         os.mkdir("temp")
@@ -88,7 +89,9 @@ if result:
         "Japonés", "Francés", "Alemán", "Portugués", "Ruso"
     ]
     
-    in_lang = st.selectbox("Selecciona el lenguaje de Entrada", language_options)
+    # Selección del lenguaje de entrada con el idioma detectado como predeterminado
+    in_lang = st.selectbox("Selecciona el lenguaje de Entrada", language_options, index=language_options.index(detected_language_name))
+    
     out_lang = st.selectbox("Selecciona el lenguaje de salida", language_options)
 
     language_codes = {
@@ -108,7 +111,7 @@ if result:
     output_language = language_codes[out_lang]
 
     english_accent = st.selectbox(
-        "Selecciona el acento (solo funciona para inglés; no afecta los demás idiomas)",
+        "Selecciona el acento",
         (
             "Defecto",
             "Español",
