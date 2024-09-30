@@ -156,7 +156,7 @@ if result:
     display_output_text = st.checkbox("Mostrar el texto")
 
     # Mostrar GIF de carga mientras se procesa el audio
-    loading_gif = 'assets/loading.gif'  # Ruta al GIF de carga
+    loading_gif = 'dog.gif'  # Ruta al GIF de carga
 
     if st.button("Convertir"):
         gif_placeholder = st.empty()
