@@ -90,7 +90,7 @@ if result:
     ]
     
     # Selección del lenguaje de entrada con el idioma detectado como predeterminado
-    in_lang = st.selectbox("Selecciona el lenguaje de Entrada", language_options, index=language_options.index(detected_language_name))
+    in_lang = st.selectbox("Selecciona el lenguaje de Entrada (en caso de que el reconocimiento haya fallada)", language_options, index=language_options.index(detected_language_name))
     
     out_lang = st.selectbox("Selecciona el lenguaje de salida", language_options)
 
@@ -111,7 +111,7 @@ if result:
     output_language = language_codes[out_lang]
 
     english_accent = st.selectbox(
-        "Selecciona el acento",
+        "Selecciona el acento (solo funciona para inglés; no afecta a los demás idiomas)",
         (
             "Defecto",
             "Español",
